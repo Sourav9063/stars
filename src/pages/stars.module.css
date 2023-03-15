@@ -1,0 +1,44 @@
+.body {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    /* background-color: hsl(257, 100%, 50%); */
+    border-radius: 50%;
+    /* width: 10px;
+    height: 10px; */
+    animation: starAni 30s ease infinite alternate;
+    transition: all 400ms ease-out;
+    opacity: 0;
+}
+
+@keyframes starAni {
+    0% {
+
+        opacity: var(--opacity);
+    }
+
+    40% {
+        opacity: .2;
+
+    }
+
+    60% {
+
+        opacity: .2;
+    }
+
+    100% {
+        opacity: var(--opacity);
+
+
+    }
+}
+
+/*  cubic-bezier(0.52, 0.22, 0.86, 0.37) */
