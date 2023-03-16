@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import style from './stars.module.css';
 
+let ratio = window.innerHeight / window.innerWidth;
 
 const getRandomStarPlacement = (starsCount) => {
     const stars = [];
@@ -38,7 +39,12 @@ const move = (x1, y1, x2, y2, r) => {
 
 let stars = [];
 stars = getRandomStarPlacement(375);
-let ratio = window.innerHeight / window.innerWidth;
+// let ratio = window.innerHeight / window.innerWidth;
+// let ratio = 1;
+const distConst = Math.max(((12 * ratio) * (12 * ratio)), 144);
+
+
+
 export default function Stars() {
 
 
@@ -54,7 +60,7 @@ export default function Stars() {
     // console.log(ratio)
     useEffect(() => {
 
-        ratio = window.innerHeight / window.innerWidth;
+        // ratio = window.innerHeight / window.innerWidth;
 
         return () => {
 
@@ -76,53 +82,38 @@ export default function Stars() {
                 // console.log(e)
                 let xtmp = e.clientX - rect.left;
                 let ytmp = e.clientY - rect.top;
-
                 xtmp = (xtmp / rect.width) * 100;
-
                 ytmp = (ytmp / rect.height) * 100;
-
-
                 if (Math.abs(xtmp - x) > 1 || Math.abs(ytmp - y) > 1) {
                     setX(xtmp);
                     setY(ytmp);
                     // console.log({ x, y })
                 }
-
-
-
             }
-
             }
             onTouchMove={(e) => {
                 const rect = e.target.getBoundingClientRect();
                 // console.log(e)
                 let xtmp = e.touches[0].clientX - rect.left;
                 let ytmp = e.touches[0].clientY - rect.top;
-
                 xtmp = (xtmp / rect.width) * 100;
-
                 ytmp = (ytmp / rect.height) * 100;
-
-
                 if (Math.abs(xtmp - x) > 1 || Math.abs(ytmp - y) > 1) {
                     setX(xtmp);
                     setY(ytmp);
                     // console.log({ x, y })
                 }
-
-
             }}
             onClick={() =>
             // setStars(getRandomStarPlacement(500))
             {
-
             }
             }
-
         >
             <div className={style.debug}>
                 <p>x={x}</p>
                 <p>y={y}</p>
+                <p>ratio:{ratio}</p>
             </div>
             {
                 stars.map((star, index) => {
@@ -135,17 +126,14 @@ export default function Stars() {
                                 backgroundColor: star.backgroundColor,
                                 // top: star.top + '%',
                                 // left: star.left + '%',
-
-                                left: distance(x, y, star.left, star.top) < ((12 * ratio) * (12 * ratio)) ? move(x, y, star.left, star.top, 12 * ratio).newX + "%" : star.left + "%",
-                                top: distance(x, y, star.left, star.top) < 144 ? move(x, y, star.left, star.top, 12).newY + "%" : star.top + "%",
-                                boxShadow: `0px 0px 5px ${star.backgroundColor}`,
+                                left: distance(x, y, star.left, star.top) < (ratio <= 1 ? distConst * ratio : distConst) ? move(x, y, star.left, star.top, ratio <= 1 ? Math.sqrt(distConst) * ratio : Math.sqrt(distConst)).newX + "%" : star.left + "%",
+                                top: distance(x, y, star.left, star.top) < (ratio >= 1 ? distConst / ratio : distConst) ? move(x, y, star.left, star.top, ratio >= 1 ? Math.sqrt(distConst) / ratio : Math.sqrt(distConst)).newY + "%" : star.top + "%",
+                                // boxShadow: `0px 0px 5px ${star.backgroundColor}`,
                                 // opacity: 0,
-                                opacity: distance(x, y, star.left, star.top) < Math.min(((12 * ratio) * (12 * ratio)), 144) ? 1 : star.opacity,
-                                animation: distance(x, y, star.left, star.top) < Math.min(((12 * ratio) * (12 * ratio)), 144) ? "none" : `${style.starAni} ${star.animationDuration} ease ${star.animationDelay} infinite alternate`,
+                                opacity: distance(x, y, star.left, star.top) < (ratio >= 1 ? distConst / ratio : distConst) ? 1 : star.opacity,
+                                animation: distance(x, y, star.left, star.top) < (ratio >= 1 ? distConst / ratio : distConst) ? "none" : `${style.starAni} ${star.animationDuration} ease ${star.animationDelay} infinite alternate`,
                                 // top: (star.top - y) * (star.top - y) + (star.left - x) * (star.left - x) < 100 ? x + "%" : star.top + '%',
                                 // left: (star.top - y) * (star.top - y) + (star.left - x) * (star.left - x) < 100 ? y + "%" : star.left + '%',
-
-
                                 // opacity: star.opacity,
                                 width: star.size + 'px',
                                 height: star.size + 'px',
@@ -155,12 +143,9 @@ export default function Stars() {
                                 // transform x and y to get close to mouse position using
                                 // translateX and translateY
                                 // only those are in 20 % range of the mouse
-
                                 // transform: Math.abs(star.top - y) < 5 && Math.abs(star.left - y) < 5 ? `translateX(${star.left + (star.left - x)}px) translateY(${star.top + (star.top - x)}px)` : ``,
                                 // transform: distance(star.top, star.left, y, x) < 144 ? `translateX(${star.left + move(x, y, star.left, star.top, 12).newX}%) translateY(${star.top + move(x, y, star.left, star.top, 12).newY}%)` : ``,
-
                                 // transform: (star.top - y) * (star.top - y) + (star.left - x) * (star.left - x) < 100 ? `translateX(${x}%) translateY(${y}%)` : ``,
-
                                 // opacity: (star.top - y) * (star.top - y) + (star.left - x) * (star.left - x) < 100 ? "yellow" : "white"
                             }}
                         />
