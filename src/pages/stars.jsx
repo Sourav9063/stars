@@ -38,10 +38,11 @@ const move = (x1, y1, x2, y2, r) => {
 
 
 let stars = [];
-stars = getRandomStarPlacement(375);
+stars = getRandomStarPlacement(ratio > 1 ? 300 : 375);
 // let ratio = window.innerHeight / window.innerWidth;
 // let ratio = 1;
-const distConst = Math.max(((12 * ratio) * (12 * ratio)), 144);
+const percent = ratio > 1 ? 12 : 15
+const distConst = Math.max(((percent * ratio) * (percent * ratio)), 255);
 
 
 
