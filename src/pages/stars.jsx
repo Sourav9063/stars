@@ -93,7 +93,25 @@ export default function Stars() {
             }
 
             }
+            onTouchMove={(event) => {
+                const rect = e.touches[0].target.getBoundingClientRect();
+                // console.log(e)
+                let xtmp = e.touches[0].clientX - rect.left;
+                let ytmp = e.touches[0].clientY - rect.top;
 
+                xtmp = (xtmp / rect.width) * 100;
+
+                ytmp = (ytmp / rect.height) * 100;
+
+
+                if (Math.abs(xtmp - x) > 1 || Math.abs(ytmp - y) > 1) {
+                    setX(xtmp);
+                    setY(ytmp);
+                    // console.log({ x, y })
+                }
+
+
+            }}
             onClick={() =>
             // setStars(getRandomStarPlacement(500))
             {
