@@ -93,7 +93,7 @@ export default function Stars() {
             }
 
             }
-            onTouchMove={(event) => {
+            onTouchMove={(e) => {
                 const rect = e.target.getBoundingClientRect();
                 // console.log(e)
                 let xtmp = e.touches[0].clientX - rect.left;
@@ -120,6 +120,10 @@ export default function Stars() {
             }
 
         >
+            <div className={style.debug}>
+                <p>x={x}</p>
+                <p>y={y}</p>
+            </div>
             {
                 stars.map((star, index) => {
                     return (

@@ -18,6 +18,14 @@
     opacity: 0;
 }
 
+.debug {
+    display: none;
+    color: white;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
 @keyframes starAni {
     0% {
 
