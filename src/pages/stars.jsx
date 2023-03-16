@@ -94,7 +94,7 @@ export default function Stars() {
 
             }
             onTouchMove={(event) => {
-                const rect = e.touches[0].target.getBoundingClientRect();
+                const rect = e.target.getBoundingClientRect();
                 // console.log(e)
                 let xtmp = e.touches[0].clientX - rect.left;
                 let ytmp = e.touches[0].clientY - rect.top;
